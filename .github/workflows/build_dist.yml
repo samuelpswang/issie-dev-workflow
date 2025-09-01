@@ -36,6 +36,7 @@ jobs:
           const curr_tag = process.env.curr_tag;
           const [prev_major, prev_minor] = prev_tag.split('.').map(Number);
           const [curr_major, curr_minor] = curr_tag.split('.').map(Number);
+          console.log(prev_major === curr_major) && (prev_minor === curr_minor);
           return (prev_major === curr_major) && (prev_minor === curr_minor);
     - name: Delete current release
       if: ${{ steps.is_patch.outputs.result }}
