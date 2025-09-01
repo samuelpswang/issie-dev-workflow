@@ -54,6 +54,7 @@ jobs:
         script: |
           const body = process.env.body;
           return body.slice(1,-1);
+        result-encoding: string
     - name: Re-create current release with new tag
       if: ${{ steps.is_patch.outputs.result }}
       uses: softprops/action-gh-release@v2
