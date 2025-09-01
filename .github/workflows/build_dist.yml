@@ -34,9 +34,13 @@ jobs:
         script: |
           const prev_tag = process.env.prev_tag;
           const curr_tag = process.env.curr_tag;
-          const [prev_major, prev_minor] = prev_tag.split('.').map(Number);
-          const [curr_major, curr_minor] = curr_tag.split('.').map(Number);
-          console.log(prev_major === curr_major) && (prev_minor === curr_minor);
+          const [prev_major, prev_minor] = prev_tag.split('.');
+          const [curr_major, curr_minor] = curr_tag.split('.');
+          console.log(prev_major)
+          console.log(prev_minor)
+          console.log(curr_major)
+          console.log(curr_minor)
+          console.log((prev_major === curr_major) && (prev_minor === curr_minor));
           return (prev_major === curr_major) && (prev_minor === curr_minor);
     - name: Delete current release
       if: ${{ steps.is_patch.outputs.result }}
@@ -46,8 +50,8 @@ jobs:
       with:
         release_id: ${{ steps.latest_release.outputs.id }}
     - name: Format current release body (hack)
-      id: body_format
       if: ${{ steps.is_patch.outputs.result }}
+      id: body_format
       uses: actions/github-script@v7
       env:
         body: ${{ steps.latest_release.outputs.body }}
