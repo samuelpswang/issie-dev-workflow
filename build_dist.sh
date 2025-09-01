@@ -10,7 +10,6 @@ mkdir dist_tmp
 
 # 2. Build for each os/arch combinations
 # 3. Replace name for each os/arch combinations
-# for target in "mac,x64,dmg" "mac,arm64,dmg" "linux,x64,zip" "linux,arm64,zip" "win,x64,zip"
 for target in "mac,x64,dmg" "mac,arm64,dmg" "linux,arm64,zip" "win,x64,zip"
 do
   os=$(cut -d',' -f1 <<< "$target")
@@ -22,6 +21,7 @@ do
   pathname_new=$(sed 's/dist/dist_tmp/g' <<< "$pathname_old")
   pathname_new=$(sed "s/.$filetype//g" <<< "$pathname_new")
   pathname_new=$(sed "s/-$arch//g" <<< "$pathname_new")
+  pathname_new=$(sed "s/-$os//g" <<< "$pathname_new")
   pathname_new="$pathname_new-$os-$arch.$filetype"
   mv $pathname_old $pathname_new
 done

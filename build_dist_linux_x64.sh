@@ -23,6 +23,7 @@ do
   pathname_new=$(sed 's/dist/dist_tmp/g' <<< "$pathname_old")
   pathname_new=$(sed "s/.$filetype//g" <<< "$pathname_new")
   pathname_new=$(sed "s/-$arch//g" <<< "$pathname_new")
+  pathname_new=$(sed "s/-$os//g" <<< "$pathname_new")
   pathname_new="$pathname_new-$os-$arch.$filetype"
   mv $pathname_old $pathname_new
 done
