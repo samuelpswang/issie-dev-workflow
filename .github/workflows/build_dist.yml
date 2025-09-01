@@ -15,7 +15,7 @@ on:
 
 jobs:
   remove_previous_assets:
-    runs: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Get current release data
       id: latest_release
