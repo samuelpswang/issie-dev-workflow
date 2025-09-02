@@ -67,7 +67,7 @@
       "entitlementsInherit": "./public/entitlements.mac.plist",
       "icon": "public/icon.icns",
       "hardenedRuntime": true,
-      "identity": "3412479F750BD8EB9AA6497AE9E2BEFF3B04B929",
+      "identity": "2A0230641F017C64A91CC4F59600CA1CEFD5674F",
       "provisioningProfile": "issie.provisionprofile",
       "notarize": true
     },
