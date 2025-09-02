@@ -5,12 +5,13 @@ on:
     inputs:
       tag:
         description: 'Which tag to manually rebuild?'
-        required: true
         type: string
+        required: true
       release:
+        type: choice
         description: 'Replace latest releast with this rebuild?'
         required: true
-        type: choice
+        default: 'Yes'
         options:
         - Yes
         - No
