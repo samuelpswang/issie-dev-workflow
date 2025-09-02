@@ -4,16 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Which tag to manually rebuild?'
+        description: 'Which tag to manually rebuild? (string)'
         type: string
         required: true
-      release:
-        type: choice
-        description: 'Replace currently released assets?'
-        required: true
-        options:
-          - 'Yes'
-          - 'No'
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
@@ -21,7 +14,6 @@ on:
 jobs:
   update-current-release:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' || inputs.release == 'Yes'}}
     steps:
     - name: Get current release data
       id: latest_release
@@ -113,7 +105,6 @@ jobs:
       run: ./build_dist.sh --default --remove=linux:x64:zip
     - name: Deploy to releases page
       uses: softprops/action-gh-release@v2
-      if: ${{ github.event_name == 'push' || inputs.release == 'Yes' }}
       with:
         tag_name: ${{ github.event_name == 'push' && github.ref_name || inputs.tag }}
         files: dist/*
@@ -140,7 +131,6 @@ jobs:
       run: ./build_dist.sh --add=linux:x64:zip
     - name: Deploy to releases page
       uses: softprops/action-gh-release@v2
-      if: ${{ github.event_name == 'push' || inputs.release == 'Yes' }}
       with:
         tag_name: ${{ github.event_name == 'push' && github.ref_name || inputs.tag }}
         files: dist/*
