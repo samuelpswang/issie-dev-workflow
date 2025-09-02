@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Which tag to manually rebuild?'
+        description: 'Which tag to manually rebuild? (string)'
         type: string
         required: true
       release:
@@ -13,8 +13,8 @@ on:
         required: true
         default: 'Yes'
         options:
-        - Yes
-        - No
+          - Yes
+          - No
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
