@@ -69,7 +69,7 @@
       "hardenedRuntime": true,
       "identity": "2A0230641F017C64A91CC4F59600CA1CEFD5674F",
       "provisioningProfile": "issie.provisionprofile",
-      "notarize": true
+      "notarize": false
     },
     "dmg": {
       "icon": false
