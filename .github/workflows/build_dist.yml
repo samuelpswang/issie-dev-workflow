@@ -118,6 +118,10 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
+    - name: Set up required Ubuntu packages
+      run: |
+        sudo apt-get update
+        sudo apt-get install libudev-dev
     - name: Checkout the repo
       uses: actions/checkout@v5
     - name: Restore .NET tools and node packages, via build.sh
