@@ -68,7 +68,7 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         draft: true
-        body: New minor version pushed, release text work in progress.
+        body: New major or minor version pushed, release text work in progress.
 
   build-distributions-all:
     runs-on: macos-latest
@@ -111,7 +111,7 @@ jobs:
         files: dist/*
 
   build-distribution-linux-x64:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     needs: update-current-release
     steps:
     - name: Set up .NET Core

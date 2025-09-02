@@ -1,6 +1,6 @@
 {
   "name": "issie",
-  "version": "5.12.0",
+  "version": "5.12.1",
   "description": "Schematic editor and Simulator",
   "homepage": "https://github.com/tomcl/issie",
   "bugs": {
@@ -72,7 +72,7 @@
       "notarize": true
     },
     "dmg": {
-      "sign": false
+      "icon": false
     }
   },
   "dependencies": {
