@@ -12,8 +12,8 @@ on:
         required: true
         type: choice
         options:
-          - Yes
-          - No
+        - Yes
+        - No
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
