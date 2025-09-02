@@ -1,14 +1,19 @@
+name: Build
+
 on:
-  # workflow_dispatch:
-  #   inputs:
-  #     release:
-  #       description: 'Upload binaries to Releases page?'
-  #       required: true
-  #       type: boolean
-  #     tag:
-  #       description: 'Upload binaries to which tag?'
-  #       required: true
-  #       type: string
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Which tag to manually rebuild?'
+        required: true
+        type: string
+      release:
+        description: 'Replace latest releast with this rebuild?'
+        required: true
+        type: choice
+        options:
+          - Yes
+          - No
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
@@ -95,6 +100,8 @@ jobs:
         dotnet-version: '8.0.x'
     - name: Checkout the repo
       uses: actions/checkout@v5
+      with:
+        ref: ${{ github.event_name == 'push' && github.ref_name || inputs.tag }}
     - name: Restore .NET tools and node packages, via build.sh
       run: ./build.sh -t Build
     - name: Build app, via build_dist.sh
@@ -105,7 +112,7 @@ jobs:
       run: ./build_dist.sh --default --remove=linux:x64:zip
     - name: Deploy to releases page
       uses: softprops/action-gh-release@v2
-      if: ${{ github.event_name == 'push' || inputs.release }}
+      if: ${{ github.event_name == 'push' || inputs.release == 'Yes' }}
       with:
         tag_name: ${{ github.event_name == 'push' && github.ref_name || inputs.tag }}
         files: dist/*
@@ -124,13 +131,15 @@ jobs:
         sudo apt-get install libudev-dev
     - name: Checkout the repo
       uses: actions/checkout@v5
+      with:
+        ref: ${{ github.event_name == 'push' && github.ref_name || inputs.tag }}
     - name: Restore .NET tools and node packages, via build.sh
       run: ./build.sh -t Build
     - name: Build app, via build_dist.sh
       run: ./build_dist.sh --add=linux:x64:zip
     - name: Deploy to releases page
       uses: softprops/action-gh-release@v2
-      if: ${{ github.event_name == 'push' || inputs.release }}
+      if: ${{ github.event_name == 'push' || inputs.release == 'Yes' }}
       with:
         tag_name: ${{ github.event_name == 'push' && github.ref_name || inputs.tag }}
         files: dist/*
