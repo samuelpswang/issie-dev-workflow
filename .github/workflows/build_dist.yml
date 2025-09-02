@@ -72,7 +72,7 @@ jobs:
 
   build_dist:
     runs-on: macos-latest
-    needs: update_current_release
+    # needs: update_current_release
     steps:
     - name: Checkout the repo
       uses: actions/checkout@v5
