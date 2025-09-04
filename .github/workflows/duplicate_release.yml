@@ -1,0 +1,41 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  update-current-release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get current release data
+      id: latest_release
+      uses: KevinRohn/github-full-release-data@v2
+      with:
+        repository: ${{ github.repository }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        version: latest
+    - name: Delete current release
+      if: ${{ steps.is_patch.outputs.result == 'true' }}
+      uses: liudonghua123/delete-release-action@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        release_id: ${{ steps.latest_release.outputs.id }}
+    - name: Format current release body (hack)
+      if: ${{ steps.is_patch.outputs.result == 'true' }}
+      id: body_format
+      uses: actions/github-script@v7
+      env:
+        body: ${{ steps.latest_release.outputs.body }}
+      with:
+        script: |
+          let body = process.env.body;
+          body = body.slice(1,-1);
+          body = body.replace("\r\n", "\n");
+          console.log(body);
+          return body.slice(1,-1);
+        # result-encoding: string
+    - name: Re-create current release with new tag
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ github.event_name == 'push' && github.ref_name || inputs.tag }}
+        name: ${{ steps.latest_release.outputs.name }}
+        body: ${{ steps.body_format.outputs.result }}
