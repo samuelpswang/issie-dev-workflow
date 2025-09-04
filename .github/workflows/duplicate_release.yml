@@ -27,7 +27,8 @@ jobs:
         script: |
           let body = process.env.body;
           body = body.slice(1,-1);
-          body = body.replaceAll("\\r\\n", "\n");
+          body = body.replaceAll("\\r\\n", "\r\n");
+          body = body.replaceAll("\\r", "\r\n");
           console.log(body)
           return body;
         result-encoding: string
