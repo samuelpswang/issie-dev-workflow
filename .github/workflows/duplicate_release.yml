@@ -30,7 +30,7 @@ jobs:
           body = body.replace("\r\n", "\n");
           console.log(body);
           return body.slice(1,-1);
-        # result-encoding: string
+        result-encoding: string
     - name: Re-create current release with new tag
       uses: softprops/action-gh-release@v2
       with:
